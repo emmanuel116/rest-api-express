@@ -1,4 +1,4 @@
-import joi from 'joi'
+const joi = require('joi')
 
 const userIdSchema = joi.number()
 const userUserSchema = joi.string().max(50)
@@ -10,18 +10,18 @@ const createUserSchema = {
   user: userUserSchema.required(),
   name: userNameSchema.required(),
   password: userPasswordSchema.required(),
-  role: userRoleSchema.required(),
+  role: userRoleSchema.required()
 }
 
 const updateUserSchema = {
   user: userUserSchema,
   name: userNameSchema,
   password: joi.string().allow(''),
-  role: userRoleSchema,
+  role: userRoleSchema
 }
 
-export default {
+module.exports = {
   userIdSchema,
   createUserSchema,
-  updateUserSchema,
+  updateUserSchema
 }

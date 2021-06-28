@@ -1,3 +1,3 @@
-import authApi from './auth'
+const authApi = require('./auth')
 
-export default authApi
+module.exports = authApi

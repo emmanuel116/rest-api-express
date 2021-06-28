@@ -1,76 +1,82 @@
-import UserService from './services'
+const usersService = require('./services')
 
-const usersService = new UserService()
-
-export const getUsers = async (req, res, next) => {
+const getUsers = async (req, res, next) => {
   const query = req.query
   try {
     const users = await usersService.getUsers(query)
     res.status(200).json({
       data: users,
-      message: 'Users Listed',
+      message: 'Users Listed'
     })
   } catch (err) {
     next(err)
   }
 }
 
-export const getUser = async (req, res, next) => {
+const getUser = async (req, res, next) => {
   const { userId } = req.params
   try {
     const user = await usersService.getUserId({ userId })
     res.status(200).json({
       data: user,
-      message: 'User Retrived',
+      message: 'User Retrived'
     })
   } catch (err) {
     next(err)
   }
 }
 
-export const createUser = async (req, res, next) => {
+const createUser = async (req, res, next) => {
   const { body: user } = req
   try {
     const createCharacterId = await usersService.createUser({
-      user,
+      user
     })
     res.status(201).json({
       data: createCharacterId,
-      message: 'Users Created',
+      message: 'Users Created'
     })
   } catch (err) {
     next(err)
   }
 }
 
-export const updateUser = async (req, res, next) => {
+const updateUser = async (req, res, next) => {
   const { body: user } = req
   const { userId } = req.params
   try {
     const updateCusomterId = await usersService.updateUser({
       user,
-      userId,
+      userId
     })
     res.status(200).json({
       data: updateCusomterId,
-      message: 'User Updated',
+      message: 'User Updated'
     })
   } catch (err) {
     next(err)
   }
 }
 
-export const deleteUser = async (req, res, next) => {
+const deleteUser = async (req, res, next) => {
   const { userId } = req.params
   try {
     const deleteCusomterId = await usersService.deleteUser({
-      userId,
+      userId
     })
     res.status(200).json({
       data: deleteCusomterId,
-      message: 'User Deleted',
+      message: 'User Deleted'
     })
   } catch (err) {
     next(err)
   }
+}
+
+module.exports = {
+  getUsers,
+  getUser,
+  createUser,
+  updateUser,
+  deleteUser
 }

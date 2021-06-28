@@ -1,13 +1,11 @@
-import passport from 'passport'
-import { BasicStrategy } from 'passport-http'
-import boom from '@hapi/boom'
-import bcrypt from 'bcrypt'
-import UsersService from '../components/users/services'
+const passport = require('passport')
+const { BasicStrategy } = require('passport-http')
+const boom = require('@hapi/boom')
+const bcrypt = require('bcrypt')
+const usersService = require('../components/users/services')
 
 passport.use(
   new BasicStrategy(async (user, password, cb) => {
-    const usersService = new UsersService()
-
     try {
       const userLoged = await usersService.getUser({ user })
       if (!userLoged) {

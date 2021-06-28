@@ -1,19 +1,19 @@
-import { Router } from 'express'
-import passport from 'passport'
-import '../../auth/jwt'
-import validationHandler from '../../utils/middleware/validationHandler'
-import {
+const { Router } = require('express')
+const passport = require('passport')
+const validationHandler = require('../../middleware/validationHandler')
+const {
   getUsers,
   getUser,
   createUser,
   updateUser,
-  deleteUser,
-} from './controllers'
-import {
+  deleteUser
+} = require('./controllers')
+const {
   userIdSchema,
   createUserSchema,
-  updateUserSchema,
-} from './schema'
+  updateUserSchema
+} = require('./schema')
+require('../../auth/jwt')
 
 const usersApi = (app) => {
   const router = Router()
@@ -47,4 +47,4 @@ const usersApi = (app) => {
   )
 }
 
-export default usersApi
+module.exports = usersApi

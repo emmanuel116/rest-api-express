@@ -1,20 +1,19 @@
-import passport from 'passport'
-import { Strategy, ExtractJwt } from 'passport-jwt'
-import boom from '@hapi/boom'
-import UsersService from '../components/users/services'
-import config from '../config'
+const passport = require('passport')
+const { Strategy, ExtractJwt } = require('passport-jwt')
+const boom = require('@hapi/boom')
+const usersService = require('../components/users/services')
+const { config } = require('../config')
 
 passport.use(
   new Strategy(
     {
       secretOrKey: config.authJwtSecret,
-      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken()
     },
     async function (tokenPayload, cb) {
-      const usersService = new UsersService()
       try {
         const userLoged = await usersService.getUser({
-          user: tokenPayload.user,
+          user: tokenPayload.user
         })
         if (!userLoged) {
           return cb(boom.unauthorized(), false)

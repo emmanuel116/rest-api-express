@@ -1,16 +1,15 @@
-import { get } from '../../db'
+const { get } = require('../../db')
 
-class ApiKeysService {
-  constructor() {
-    this.collection = '`api-keys`'
-  }
-  async getApiKey({ token }) {
-    const apiKey = await get(
-      `SELECT * FROM ${this.collection} WHERE token = ? `,
+const apiKeys = '`api-keys`'
+
+const getApiKey = async ({ token }) => {
+  const apiKey = await get(
+      `SELECT * FROM ${apiKeys} WHERE token = ? `,
       [token]
-    )
-    return apiKey
-  }
+  )
+  return apiKey
 }
 
-export default ApiKeysService
+module.exports = {
+  getApiKey
+}

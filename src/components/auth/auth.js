@@ -1,16 +1,14 @@
-import express from 'express'
-import passport from 'passport'
-import boom from '@hapi/boom'
-import jwt from 'jsonwebtoken'
-import ApiKeysService from './services'
-import config from '../../config'
-import '../../auth/basic'
+const { config } = require('../../config')
+const jwt = require('jsonwebtoken')
+const { getApiKey } = require('./services')
+const express = require('express')
+const passport = require('passport')
+const boom = require('@hapi/boom')
+require('../../auth/basic')
 
 const authApi = (app) => {
   const router = express.Router()
   app.use('/api/auth', router)
-
-  const apiKeysService = new ApiKeysService()
 
   router.post('/sing-in', async (req, res, next) => {
     const { apiKeyToken } = req.body
@@ -27,7 +25,7 @@ const authApi = (app) => {
           if (error) {
             next(error)
           }
-          const apiKey = await apiKeysService.getApiKey({ token: apiKeyToken })
+          const apiKey = await getApiKey({ token: apiKeyToken })
 
           if (!apiKey) {
             next(boom.unauthorized('apiKeyToken is required'))
@@ -39,11 +37,11 @@ const authApi = (app) => {
             sub: id,
             name,
             user,
-            role,
+            role
           }
 
           const token = jwt.sign(payload, config.authJwtSecret, {
-            expiresIn: '60m',
+            expiresIn: '60m'
           })
 
           return res.status(200).json({ token, user: { id, name, user, role } })
@@ -55,4 +53,4 @@ const authApi = (app) => {
   })
 }
 
-export default authApi
+module.exports = authApi

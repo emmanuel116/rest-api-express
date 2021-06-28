@@ -1,17 +1,17 @@
-import express from 'express'
-import fileUpload from 'express-fileupload'
-import cors from 'cors'
-import helmet from 'helmet'
-import morgan from 'morgan'
-import path from 'path'
-import notFoundHandler from './utils/middleware/notFoundHandler'
-import {
+const express = require('express')
+const fileUpload = require('express-fileupload')
+const cors = require('cors')
+const helmet = require('helmet')
+const morgan = require('morgan')
+const path = require('path')
+const notFoundHandler = require('./middleware/notFoundHandler')
+const {
   logErrors,
   wrapError,
-  errorHandler,
-} from './utils/middleware/errorHandler'
-import usersApi from './components/users'
-import authApi from './components/auth'
+  errorHandler
+} = require('./middleware/errorHandler')
+const usersApi = require('./components/users')
+const authApi = require('./components/auth')
 
 const app = express()
 
@@ -31,4 +31,4 @@ app.use(logErrors)
 app.use(wrapError)
 app.use(errorHandler)
 
-export default app
+module.exports = app

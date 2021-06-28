@@ -1,3 +1,3 @@
-import routes from './routes'
+const routes = require('./routes')
 
-export default routes
+module.exports = routes

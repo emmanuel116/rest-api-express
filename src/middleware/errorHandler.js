@@ -1,37 +1,37 @@
-import boom from '@hapi/boom'
-import { dev } from '../../config/index'
-import chalk from 'chalk'
+const boom = require('@hapi/boom')
+const { config } = require('../config/index')
+const chalk = require('chalk')
 
 const withErrorStack = (error, stack) => {
-  if (dev) {
+  if (config.dev) {
     return { ...error, stack }
   }
   return error
 }
 
-export const logErrors = (err, req, res, next) => {
+const logErrors = (err, req, res, next) => {
   console.log(chalk.red(err))
   next(err)
 }
 
-export const wrapError = (err, req, res, next) => {
+const wrapError = (err, req, res, next) => {
   if (!err.isBoom) {
     next(boom.badImplementation(err))
   }
   next(err)
 }
 
-export const errorHandler = (err, req, res, next) => {
+const errorHandler = (err, req, res, next) => {
   const {
-    output: { statusCode, payload },
+    output: { statusCode, payload }
   } = err
 
   res.status(statusCode || 500)
   res.json(withErrorStack(payload, err.stack))
 }
 
-export default {
+module.exports = {
   logErrors,
   wrapError,
-  errorHandler,
+  errorHandler
 }

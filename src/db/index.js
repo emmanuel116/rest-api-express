@@ -1,5 +1,5 @@
-import mysql from 'mysql'
-import config from '../config'
+const mysql = require('mysql')
+const { config } = require('../config')
 
 const pool = mysql.createPool({
   user: config.dbUser,
@@ -7,10 +7,10 @@ const pool = mysql.createPool({
   host: config.dbHost,
   database: config.dbName,
   connectionLimit: 10,
-  port: config.dbPort,
+  port: config.dbPort
 })
 
-export const getAll = (query) => {
+const getAll = (query) => {
   return new Promise((resolve, reject) => {
     pool.query(query, (error, elements) => {
       if (error) {
@@ -21,8 +21,7 @@ export const getAll = (query) => {
   })
 }
 
-export const get = (query, values) => {
-  console.log(query, values)
+const get = (query, values) => {
   return new Promise((resolve, reject) => {
     pool.query(query, values, (error, element) => {
       if (error) {
@@ -33,7 +32,7 @@ export const get = (query, values) => {
   })
 }
 
-export const post = (query, values) => {
+const post = (query, values) => {
   return new Promise((resolve, reject) => {
     pool.query(query, values, (error, result) => {
       if (error) {
@@ -44,7 +43,7 @@ export const post = (query, values) => {
   })
 }
 
-export const put = (query, values) => {
+const put = (query, values) => {
   return new Promise((resolve, reject) => {
     pool.query(query, values, (error) => {
       if (error) {
@@ -55,7 +54,7 @@ export const put = (query, values) => {
   })
 }
 
-export const deleted = (query, id) => {
+const deleted = (query, id) => {
   return new Promise((resolve, reject) => {
     pool.query(query, id, (error) => {
       if (error) {
@@ -64,4 +63,12 @@ export const deleted = (query, id) => {
       return resolve(id)
     })
   })
+}
+
+module.exports = {
+  getAll,
+  get,
+  post,
+  put,
+  deleted
 }

@@ -1,4 +1,4 @@
-import { notFound } from '@hapi/boom'
+const { notFound } = require('@hapi/boom')
 
 const notFoundHandler = (req, res) => {
   const {
@@ -8,4 +8,4 @@ const notFoundHandler = (req, res) => {
   res.status(statusCode).json(payload)
 }
 
-export default notFoundHandler
+module.exports = notFoundHandler
